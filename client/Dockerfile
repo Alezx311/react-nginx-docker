@@ -4,7 +4,6 @@ WORKDIR /var/www/client
 
 COPY . .
 
-RUN npm install
+RUN yarn install
 
-# CMD ["/bin/bash"]
-CMD ["npm", "run", "start"]
+CMD ["yarn", "run", "start"]

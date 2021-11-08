@@ -1,5 +1,5 @@
 {
-	"name": "nginx-react-nodejs-docker-client",
+	"name": "nginx_docker_exp_client",
 	"version": "0.1.0",
 	"private": true,
 	"description": "Client",

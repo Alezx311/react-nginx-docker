@@ -52,8 +52,6 @@ services:
     container_name: nginx_docker_exp_client
     stdin_open: true
     tty: true
-    # environment:
-    # - CHOKIDAR_USEPOLLING=true
     build:
       dockerfile: Dockerfile
       context: ./client
