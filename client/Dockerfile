@@ -1,10 +1,10 @@
-FROM node:alpine
-WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-COPY ./ ./
-RUN npm i
-CMD ["npm", "run", "start"]
+FROM node:14.15.1
 
-# docker build -f Dockerfile -t client .
-# docker run -it -p 4001:3000 client
+WORKDIR /var/www/client
+
+COPY . .
+
+RUN npm install
+
+# CMD ["/bin/bash"]
+CMD ["npm", "run", "start"]

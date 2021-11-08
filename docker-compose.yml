@@ -7,6 +7,7 @@ x-common-variables: &common-variables
 
 services:
   mysql_db:
+    container_name: nginx_docker_exp_mysql_db
     image: mysql
     restart: always
     cap_add:
@@ -14,13 +15,14 @@ services:
     volumes:
       - './setup.sql:/docker-entrypoint-initdb.d/setup.sql'
     ports:
-      - '9906:3306'
+      - 9906:3306
     environment:
       <<: *common-variables
       MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
       MYSQL_HOST: localhost
 
   nginx:
+    container_name: nginx_docker_exp_nginx
     depends_on:
       - api
       - client
@@ -29,33 +31,37 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - '3050:80'
+      - 3050:80
 
   api:
+    container_name: nginx_docker_exp_api
+    stdin_open: true
+    tty: true
     build:
       dockerfile: Dockerfile
-      context: './server'
+      context: ./server
     depends_on:
       - mysql_db
     volumes:
-      - /app/node_modules
-      - ./server:/app
+      - ./server:/var/www/api
     environment:
       <<: *common-variables
       MYSQL_HOST_IP: mysql_db
 
   client:
+    container_name: nginx_docker_exp_client
     stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    # environment:
+    # - CHOKIDAR_USEPOLLING=true
     build:
       dockerfile: Dockerfile
       context: ./client
     volumes:
-      - /app/node_modules
-      - ./client:/app
+      - ./client:/var/www/client
 
   adminer:
+    container_name: nginx_docker_exp_adminer
     image: adminer:latest
     restart: unless-stopped
     ports:
